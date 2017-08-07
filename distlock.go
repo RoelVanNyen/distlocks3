@@ -88,7 +88,8 @@ func AquireLock(bucketName string, prefix string, region string) string {
 	rPrefix := fmt.Sprintf("%v/locks/%v.lock", prefix, u1.String())
 
 	uploadedVersion := PutLockS3(bucketName, rPrefix, region)
-
+	
+	fmt.Printf("Waiting for lock %v\n", rPrefix)
 	for true {
 		versionPrefix := fmt.Sprintf("%v/locks", prefix)
 		version := GetOldestVersion(bucketName, versionPrefix, region)
